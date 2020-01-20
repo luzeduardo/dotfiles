@@ -6,18 +6,40 @@ sudo dnf -y install gnome-tweak-tool dnf-plugins-core openssh-server
 
 sudo dnf -y install wget make autoconf texinfo
 sudo dnf -y install npm
-git config --global user.name "Eduardo Luz"
-git config --global user.email "luz.eduardo@gmail.com"
-git config --global push.default simple
 
 title () {
-   echo "$1==============================================================================================="
+   echo "********************************************************"
+   echo "********************************************************"
+   echo "$1******************************************************"
+   echo "********************************************************"
+   echo "********************************************************"
 }
+
+# Shell
+title "shell"
+sudo dnf install htop curl httpie bash bash-completion tmux vim
+title "shell-END"
+
+# Laptop
+title "laptop"
+sudo dnf -y install acpi powertop tlp xclip xdotool recode
+title "laptop-END"
 
 # gpg
 title "gpg"
 sudo yum install gnupg
 title "gpg-END"
+
+
+#package manager
+title "snapd"
+sudo dnf install -y snapd
+sudo ln -s /var/lib/snapd/snap /snap
+title "snapd-END"
+
+git config --global user.name "Eduardo Luz"
+git config --global user.email "luz.eduardo@gmail.com"
+git config --global push.default simple
 
 cp ~/dotfiles/fedora/know_hosts.gpg ~/.ssh/know_hosts.gpg
 cp ~/dotfiles/fedora/id_rsa.pub.gpg ~/.ssh/id_rsa.pub.gpg
@@ -38,12 +60,6 @@ else
 fi
 #ngrok
 title "NGROK-END"
-
-#package manager
-title "snapd"
-sudo dnf install -y snapd
-sudo ln -s /var/lib/snapd/snap /snap
-title "snapd-END"
 
 cd ~
 #dotfiles config
@@ -102,16 +118,6 @@ title "vim-END"
 title "silversearcher"
 dnf install -y zlib-devel bzip2 bzip2-devel readline-devel openssl-devel xz xz-devel bison bison-devel glibc-devel binutils gcc autoconf automake gcc-c++ libffi-devel libtool sqlite-devel libyaml-devel xclip the_silver_searcher
 title "silversearcher-END"
-
-# Shell
-title "shell"
-sudo dnf install htop curl httpie bash bash-completion tmux vim
-title "shell-END"
-
-# Laptop
-title "laptop"
-sudo dnf -y install acpi powertop tlp xclip xdotool recode
-title "laptop-END"
 
 title "chrome and other"
 sudo dnf -y install \
@@ -228,16 +234,18 @@ DOCKER_IS_AVAILABLE="$(docker -v 2>&1 >/dev/null)"
 if [[ ${DOCKER_IS_AVAILABLE} == '' ]]; then
     echo -e "${bakgrn}[installed][Docker]${txtrst} already installed ;)" ;
 else
-	echo -e "${bakcyn}[Docker] Start Install ${txtrst}";
-  dnf -y install dnf-plugins-core
-  dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
-  dnf config-manager --set-enabled docker-ce-edge
-  dnf config-manager --set-enabled docker-ce-test
-  dnf install -y docker-ce
-	service docker start
-	usermod -aG docker $USER
-	chkconfig docker on
-	echo -e "${bakgrn}[Docker] Finish Install ${txtrst}";
+	# echo -e "${bakcyn}[Docker] Start Install ${txtrst}";
+  # dnf -y install dnf-plugins-core
+  # dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+  # dnf config-manager --set-enabled docker-ce-edge
+  # dnf config-manager --set-enabled docker-ce-test
+  # dnf install -y docker-ce
+	# service docker start
+	# usermod -aG docker $USER
+	# chkconfig docker on
+	# echo -e "${bakgrn}[Docker] Finish Install ${txtrst}";
+
+  sudo snap install docker
 fi
 #docker
 title "docker-END"
@@ -267,3 +275,11 @@ else
 fi
 #vlc
 title "vlc-END"
+
+title "postman-END"
+sudo snap install postman
+title "postman-END"
+
+title "slack-END"
+sudo snap install slack --classic
+title "slack-END"
