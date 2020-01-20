@@ -9,6 +9,34 @@ title () {
 ssh-keygen -t rsa -N '' -C "luz.eduardo@gmail.com"
 ssh-add ~/.ssh/id_rsa
 
+cd ~
+#dotfiles config
+mkdir -p ~/code && git clone https://github.com/luzeduardo/dotfiles ~/code/dotfiles
+cd ~/code/dotfiles 
+git remote rm origin && git remote add origin git@github.com:luzeduardo/dotfiles
+cd ~
+
+mkdir -p /usr/local/bin
+
+title "gpg"
+if [[ "$(which gpg)" == '' ]]; then
+  sudo yum install -y gnupg
+fi
+title "gpg-END"
+
+title "ssh"
+sudo -u $USER cp ~/dotfiles/fedora/known_hosts.gpg ~/.ssh/known_hosts.gpg
+sudo -u $USER cp ~/dotfiles/fedora/id_rsa.pub.gpg ~/.ssh/id_rsa.pub.gpg
+if [ ! -d "~/.ssh" ]; then
+    mkdir -p "~/.ssh"
+fi
+cd ~/.ssh
+sudo -u $USER gpg -d ~/.ssh/known_hosts.gpg
+sudo -u $USER gpg -d ~/.ssh/id_rsa.pub.gpg
+title "ssh-END"
+
+cd ~
+
 sudo dnf -y update
 sudo dnf -y install git vim gvim terminator udisks wget
 sudo dnf -y install gnome-tweak-tool dnf-plugins-core openssh-server
@@ -35,7 +63,7 @@ sudo dnf -y install ranger caca-utils highlight atool w3m poppler-utils mediainf
 title "utils-END"
 
 title "shell"
-sudo dnf install htop curl httpie bash bash-completion tmux vim
+sudo dnf install -y htop curl httpie bash bash-completion tmux vim
 title "shell-END"
 
 title "laptop"
@@ -55,12 +83,6 @@ if [[ "$(which gitflow)" == '' ]]; then
   sudo dnf install -y gitflow
 fi
 title "gitflow-END"
-
-title "gpg"
-if [[ "$(which gpg)" == '' ]]; then
-  sudo yum install gnupg
-fi
-title "gpg-END"
 
 #package manager
 title "snapd"
@@ -98,21 +120,6 @@ git config --global user.name "Eduardo Luz"
 git config --global user.email "luz.eduardo@gmail.com"
 git config --global push.default simple
 
-cd ~
-#dotfiles config
-mkdir -p ~/code && git clone https://github.com/luzeduardo/dotfiles ~/code/dotfiles
-cd ~/code/dotfiles 
-git remote rm origin && git remote add origin git@github.com:luzeduardo/dotfiles
-cd ~
-
-mkdir -p /usr/local/bin
-
-title "ssh"
-cp ~/dotfiles/fedora/known_hosts.gpg ~/.ssh/known_hosts.gpg
-cp ~/dotfiles/fedora/id_rsa.pub.gpg ~/.ssh/id_rsa.pub.gpg
-title "ssh-END"
-
-cd ~
 
 #ngrok
 title "NGROK"
@@ -136,7 +143,6 @@ title "vscode"
 if [[ "$(which code)" == '' ]]; then
   sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
   sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
-  dnf check-update
   sudo dnf install -y code
   cat ~/dotfiles/fedora/vscode/extensions.list | xargs -L 1 code --install-extension
   cp ~/dotfiles/fedora/vscode/settings.user ~/.vscode/
@@ -178,9 +184,9 @@ fi
 #js
 title "js"
 if [[ "$(which nvm)" == '' ]]; then
-  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash\n
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
   nvm list
-  export NVM_DIR="$HOME/.nvm"\n[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm\n[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+  export NVM_DIR="$HOME/.nvm" [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm\n[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 nvm list
 fi
 title "js-END"
@@ -197,9 +203,9 @@ title "python"
 python3 setup.py build && sudo python3 setup.py install
 title "python-END"
 
-title "nodemon httpserver"
+title "nodemon httpserver commitizen"
 if [[ "$(which nodemon)" == '' ]]; then
-  sudo npm install -g http-server nodemon
+  sudo npm install -g http-server nodemon commitizen
 fi
 title "nodemon httpserver END"
 
@@ -207,9 +213,8 @@ title "nodemon httpserver END"
 title "virtualbox"
 if [[ "$(which virtualbox)" == '' ]]; then
   sudo wget http://download.virtualbox.org/virtualbox/rpm/fedora/virtualbox.repo -P /etc/yum.repos.d/
-  sudo dnf -y update
   sudo dnf -y install @development-tools
-  sudo dnf install kernel-devel kernel-headers dkms qt5-qtx11extras  elfutils-libelf-devel zlib-devel
+  sudo dnf install -y kernel-devel kernel-headers dkms qt5-qtx11extras  elfutils-libelf-devel zlib-devel
   sudo dnf -y install VirtualBox-6.0
   usermod -a -G vboxusers $USER
 fi
@@ -233,7 +238,7 @@ title "exercism END"
  title "yarn"
  if [[ "$(which yarn)" == '' ]]; then
   curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
-  sudo yum install yarn
+  sudo yum install -y yarn
  fi
  title "yarn-END"
   
@@ -242,22 +247,20 @@ title "exercism END"
  if [[ "$(which brave)" == '' ]]; then
   sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/
   sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
-  sudo dnf install brave-browser
+  sudo dnf install -y brave-browser
  fi
  title "brave-END"
    
  #tile screen manager 
- #sudo dnf install i3 i3status dmenu i3lock xbacklight feh conky
+ #sudo dnf install i3 i3st1atus dmenu i3lock xbacklight feh conky
  title "tile"
- if [ ! -d ~/.local/share/gnome-shell/extensions/gTile@vibou ] 
-  git clone https://github.com/gTile/gTile.git ~/.local/share/gnome-shell/extensions/gTile@vibou
- fi
+ git clone https://github.com/gTile/gTile.git ~/.local/share/gnome-shell/extensions/gTile@vibou
  title "tile-END"
 
 # pdf to kindle converter
 # https://www.willus.com/k2pdfopt/download/
 # calibre
-sudo -v && wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sudo sh /dev/stdin\n
+sudo -v && wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sudo sh /dev/stdin
 
 #docker
 title "docker"
