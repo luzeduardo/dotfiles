@@ -15,6 +15,19 @@ sudo dnf -y install gnome-tweak-tool dnf-plugins-core openssh-server
 sudo dnf -y install wget make autoconf texinfo
 sudo dnf -y install npm
 sudo dnf -y install zlib-devel bzip2 bzip2-devel readline-devel openssl-devel xz xz-devel bison bison-devel glibc-devel binutils gcc autoconf automake gcc-c++ libffi-devel libtool sqlite-devel libyaml-devel xclip
+sudo dnf -y install deluge
+sudo dnf -y install jq
+
+title "flutter"
+if [[ "$(which flutter)" == '' ]]; then
+  wget https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_v1.12.13+hotfix.5-stable.tar.xz
+  mkdir -p code
+  cd code
+  tar xf ~/flutter_linux_v1.12.13+hotfix.5-stable.tar.xz
+  export PATH="$PATH:`pwd`/flutter/bin"
+  #flutter doctor
+fi
+title "flutter-END"
 
 # ranger (and utilities for previewing files)
 title "utils"
@@ -329,4 +342,3 @@ ln -s ~/dotfiles/fedora/zpretzorc ~/.zpretzorc
 #flutter
 #android studio
 #stremio
-#deluge
