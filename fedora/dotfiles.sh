@@ -342,6 +342,9 @@ ln -s ~/dotfiles/fedora/zshenv ~/.zshenv
 ln -s ~/dotfiles/fedora/zpretzorc ~/.zpretzorc
 
 
+. ts.sh
+
+
 #flutter
 #android studio
 #stremio
