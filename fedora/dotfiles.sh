@@ -157,17 +157,10 @@ make install
 cd ~
 title "vim-END"
 
-title "chrome and other"
-if [[ "$(which chrome)" == '' ]]; then
-  sudo dnf -y install \
-     google-chrome-stable\
-     gnome-tweak-tool\
-     gnome-shell-extension-user-theme\
-     skypeforlinux\
-     telegram-desktop
-fi
-
-title "chrome and other-END"
+title "skype"
+sudo curl -o /etc/yum.repos.d/skype-stable.repo https://repo.skype.com/rpm/stable/skype-stable.repo
+sudo dnf install skypeforlinux
+title "skype - END"
 
 # dmenu with ^M working as Return
 git clone https://github.com/goldfeld/dmenu ~/dmenu
