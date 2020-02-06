@@ -107,4 +107,6 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 export PATH="$PATH:$HOME/dev/flutter/bin"
 export PATH="$PATH:$HOME/.cargo/env"
 
+alias brilho="xrandr --output eDP-1 --brightness"
+
 #source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
