@@ -336,6 +336,8 @@ ln -s ~/dotfiles/fedora/zpretzorc ~/.zpretzorc
 
 
 . ts.sh
+. langservers.sh
+
 
 
 #flutter
