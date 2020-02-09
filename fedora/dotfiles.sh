@@ -38,6 +38,7 @@ title "ssh-END"
 cd ~
 
 sudo dnf -y update
+sudo dnf -y install  neovim python3-neovim
 sudo dnf -y install git vim gvim terminator udisks wget
 sudo dnf -y install gnome-tweak-tool dnf-plugins-core openssh-server
 sudo dnf -y install wget make autoconf texinfo
