@@ -336,6 +336,7 @@ ln -s ~/dotfiles/fedora/zshenv ~/.zshenv
 ln -s ~/dotfiles/fedora/zpretzorc ~/.zpretzorc
 
 
+. fonts.sh
 . ts.sh
 . langservers.sh
 
