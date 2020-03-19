@@ -46,6 +46,8 @@ sudo dnf -y install npm
 sudo dnf -y install zlib-devel bzip2 bzip2-devel readline-devel openssl-devel xz xz-devel bison bison-devel glibc-devel binutils gcc autoconf automake gcc-c++ libffi-devel libtool sqlite-devel libyaml-devel xclip
 sudo dnf -y install deluge
 sudo dnf -y install jq
+# hardware info listener
+sudo dnf -y install lshw 
 
 title "flutter"
 if [[ "$(which flutter)" == '' ]]; then
